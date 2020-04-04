@@ -12,6 +12,7 @@ public class rewind : MonoBehaviour
     public Image stalin;
     List<Pointintime> pointintime;
     public float opa = 0;
+    public AudioSource reverse;
 
 
     void Start() {
@@ -63,6 +64,7 @@ public class rewind : MonoBehaviour
     void StartRewind() {
         isrewinding = true;
         coaster.isKinematic = true;
+        reverse.Play();
     }
     void StopRewind()
     {

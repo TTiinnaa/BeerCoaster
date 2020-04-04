@@ -46,7 +46,8 @@ public class PvPFlip : MonoBehaviour
     public AudioSource Wherewebou;
 
     public AlcoholConsumption Alc;
-
+    public double distancefromglass;
+    public Transform glass;
     void Start() {
 
         player1 = FindObjectOfType<Distributer>().player1;
@@ -136,19 +137,19 @@ public class PvPFlip : MonoBehaviour
             switch (activeplayer)
             {
                 case 1:
-                    fb.DelFury(10);
+                    fb.DelFury(25);
                     break;
                 case 2:
-                    fb2.AddFury(10);
+                    fb2.AddFury(5);
                     break;
                 case 3:
-                    Alc.DrinkAl(10);
-                break;
+                    Alc.DrinkAl(7);
+                    break;
                 case 4:
-                    fb3.Loss(50);
+                    fb3.Loss(5);
                     break;
                 case 5:
-                    fb4.AddFury(50);
+                    fb4.AddFury(10);
                     break;
                     
             }
@@ -201,22 +202,29 @@ public class PvPFlip : MonoBehaviour
                 else {
                     //Debug.Log("Ull get em next time");
 
+                    double x1 = glass.position.x;
+                    double y1 = glass.position.z;
+                    double x2 = rb.transform.position.x;
+                    double y2 = rb.transform.position.z;
+
+                    distancefromglass = Math.Sqrt(Math.Pow((x1 - x2), 2)+ Math.Pow((y1 - y2), 2));
+
                     switch (activeplayer)
                     {
                         case 1:
-                            fb.DelFury(50);
+                            fb.DelFury(Convert.ToInt32(500/distancefromglass));
                             break;
                         case 2:
-                            fb2.AddFury(50);
+                            fb2.AddFury(Convert.ToInt32(100 / distancefromglass));
                             break;
                         case 3:
-                            Alc.DrinkAl(50);
+                            Alc.DrinkAl(Convert.ToInt32(150 / distancefromglass));
                             break;
                         case 4:
-                            fb3.Loss(50);
+                            fb3.Loss(Convert.ToInt32(100 / distancefromglass));
                             break;
                         case 5:
-                            fb4.AddFury(50);
+                            fb4.AddFury(Convert.ToInt32(200 / distancefromglass));
                             break;
                     }
                     //Debug.Log("colkk");
