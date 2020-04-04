@@ -13,8 +13,8 @@ using UnityEngine.SceneManagement;
 public class flip : MonoBehaviour{
     public bool dragging = false;
     float distance;
-    public float Throwspeed;
-    public float Archspeed;
+    public float Throwspeed = 5.48f;
+    public float Archspeed = 1;
     public float Speed;
     public Vector2 initialpos;
     public Vector2 lastpos;
@@ -23,8 +23,8 @@ public class flip : MonoBehaviour{
     public bool lastp = true;
     public bool launch = false;
     public Rigidbody rb;
-    public float forwardforce;
-    public float yscaler;
+    public float forwardforce = 12.21f;
+    public float yscaler = 11.72f;
     public Vector3 Angletor;
     public int ps;
 
@@ -52,6 +52,9 @@ public class flip : MonoBehaviour{
                 break;
             case 3:
                 newMat = Resources.Load("Aisz", typeof(Material)) as Material;
+                break;
+            case 4:
+                newMat = Resources.Load("Beer", typeof(Material)) as Material;
                 break;
             default:
                 newMat = Resources.Load("Haratz", typeof(Material)) as Material;

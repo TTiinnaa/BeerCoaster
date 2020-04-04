@@ -47,10 +47,32 @@ public class Pflip : MonoBehaviour
 
     public AlcoholConsumption Alc;
 
+    public int skinint;
+    Material newMat;
+
     void Start() {
 
         player1 = FindObjectOfType<stributer>().player1;
+        switch (skinint)
+        {
+            case 1:
+                newMat = Resources.Load("Haratz", typeof(Material)) as Material;
+                break;
+            case 2:
+                newMat = Resources.Load("Asia", typeof(Material)) as Material;
+                break;
+            case 3:
+                newMat = Resources.Load("Aisz", typeof(Material)) as Material;
+                break;
+            case 4:
+                newMat = Resources.Load("Beer", typeof(Material)) as Material;
+                break;
+            default:
+                newMat = Resources.Load("Haratz", typeof(Material)) as Material;
+                break;
+        }
 
+       GetComponent<MeshRenderer>().material = newMat;
     }
 
 

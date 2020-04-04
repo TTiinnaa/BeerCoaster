@@ -31,6 +31,9 @@ public class SpiningCoaster : MonoBehaviour
             case 3:
                 newMat = Resources.Load("Aisz", typeof(Material)) as Material;
                 break;
+            case 4:
+                newMat = Resources.Load("Beer", typeof(Material)) as Material;
+                break;
         }
         Object.GetComponent<MeshRenderer>().material = newMat;
     }

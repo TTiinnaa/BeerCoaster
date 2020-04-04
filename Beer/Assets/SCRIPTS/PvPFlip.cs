@@ -48,10 +48,16 @@ public class PvPFlip : MonoBehaviour
     public AlcoholConsumption Alc;
     public double distancefromglass;
     public Transform glass;
+    public int skin1;
+    public int skin2;
+        Material newMat;
     void Start() {
 
         player1 = FindObjectOfType<Distributer>().player1;
         player2 = FindObjectOfType<Distributer>().player2;
+
+        skinchanger(skin1);
+
     }
 
 
@@ -261,7 +267,7 @@ public class PvPFlip : MonoBehaviour
             p1.enabled = true;
             p2.enabled = false;
             turns = true;
-            
+            skinchanger(skin1);
         }
         else {
             rb.transform.SetPositionAndRotation(new Vector3(-0.78f, 0.47f, 81f), Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -271,9 +277,37 @@ public class PvPFlip : MonoBehaviour
             p2.enabled = true;
             p1.enabled = false;
             turns = false;
+            skinchanger(skin2);
         }
        
     }
-}
 
+
+    public void skinchanger(int skinint)
+    {
+          switch (skinint)
+        {
+            case 1:
+                newMat = Resources.Load("Haratz", typeof(Material)) as Material;
+                break;
+            case 2:
+                newMat = Resources.Load("Asia", typeof(Material)) as Material;
+                break;
+            case 3:
+                newMat = Resources.Load("Aisz", typeof(Material)) as Material;
+                break;
+            case 4:
+                newMat = Resources.Load("Beer", typeof(Material)) as Material;
+                break;
+            default:
+                newMat = Resources.Load("Haratz", typeof(Material)) as Material;
+                break;
+        }
+
+       GetComponent<MeshRenderer>().material = newMat;
+    }
+
+    
+
+}
 

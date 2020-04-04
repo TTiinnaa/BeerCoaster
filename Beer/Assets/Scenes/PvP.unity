@@ -4408,6 +4408,7 @@ GameObject:
   - component: {fileID: 1327837271}
   - component: {fileID: 1327837272}
   - component: {fileID: 1327837270}
+  - component: {fileID: 1327837273}
   m_Layer: 0
   m_Name: Distributer
   m_TagString: Untagged
@@ -4472,6 +4473,25 @@ MonoBehaviour:
   dis: {fileID: 1327837270}
   iss: {fileID: 0}
   loadscene: 0
+--- !u!114 &1327837273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327837269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da2acc0fddc7ce34e9f3ee244e964c26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinint: 1
+  Object: {fileID: 0}
+  Flip: {fileID: 0}
+  pFlip: {fileID: 0}
+  iflip: {fileID: 0}
+  vs: 1
+  pvpflip: {fileID: 2060554167}
 --- !u!1 &1338715425
 GameObject:
   m_ObjectHideFlags: 0
@@ -7625,6 +7645,7 @@ MonoBehaviour:
   Alc: {fileID: 1450904455}
   beer: {fileID: 0}
   points: 0
+  skinint: 0
 --- !u!114 &2060554167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7666,6 +7687,8 @@ MonoBehaviour:
   Alc: {fileID: 1450904455}
   distancefromglass: 0
   glass: {fileID: 1450904454}
+  skin1: 0
+  skin2: 0
 --- !u!1 &2103936452
 GameObject:
   m_ObjectHideFlags: 0
