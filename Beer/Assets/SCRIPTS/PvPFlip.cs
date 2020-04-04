@@ -1,0 +1,271 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+using System.Text;
+using UnityEngine.SceneManagement;
+public class PvPFlip : MonoBehaviour
+{
+    // Start is called before the first frame update
+
+    public bool turns = true;
+
+    public int player1;
+    public int player2;
+
+    public GameObject BornaBAR;
+    public GameObject PavelBAR;
+
+    public int activeplayer;
+    public int inactiveplayer;
+
+    public Camera p1;
+    public Camera p2;
+    public bool dragging = false;
+
+    public Vector2 initialpos;
+    public Vector2 lastpos;
+    public Vector2 forces;
+    public bool firstp = false;
+    public bool lastp = true;
+    public bool launch = false;
+    public Rigidbody rb;
+
+    public float forwardforce;
+    public float yscaler;
+
+    public int ps;
+
+    private Vector3 oldposi;
+    private Vector3 newposi;
+    public FURYBAD fb;
+    public FURYBAD fb2;
+    public FURYBAD fb3;
+    public FURYBAD fb4;
+    public Transform newrb;
+    public AudioSource Wherewebou;
+
+    public AlcoholConsumption Alc;
+
+    void Start() {
+
+        player1 = FindObjectOfType<Distributer>().player1;
+        player2 = FindObjectOfType<Distributer>().player2;
+    }
+
+
+    void OnMouseDown() {
+
+        if (firstp == false && rb.IsSleeping())
+        {
+
+            initialpos = Input.mousePosition;
+
+            firstp = true;
+            lastp = true;
+            rb.useGravity = true;
+        }
+    }
+
+    void OnMouseUp() {
+
+        if (lastp == true && initialpos != new Vector2(0, 0) && rb.IsSleeping())
+        {
+
+            lastpos = Input.mousePosition;
+            if (lastpos != initialpos)
+            {
+                forces = lastpos - initialpos;
+            }
+
+            if (firstp != true) {
+                lastp = false;
+            }
+           
+        }
+        
+        dragging = false;
+
+    }
+
+    void Update()
+    {
+
+        player1 = FindObjectOfType<Distributer>().player1;
+        player2 = FindObjectOfType<Distributer>().player2;
+
+
+
+
+
+        if (turns)
+        {
+            activeplayer = player1;
+            inactiveplayer = player2;
+        }
+        else {
+            activeplayer = player2;
+            inactiveplayer = player1;
+        }
+
+        switch (activeplayer)
+        {
+            case 1:
+                fb.DelFury(0);
+                break;
+            case 2:
+                fb2.AddFury(0);
+                break;
+            case 3:
+
+                Alc.DrinkAl(0);
+                break;
+            case 4:
+                fb3.Loss(0);
+                break;
+            case 5:
+                fb4.AddFury(0);
+                break;
+        }
+
+        
+        if (rb.transform.position.y < -10f)
+        {
+
+            Wherewebou.Play();
+            switch (activeplayer)
+            {
+                case 1:
+                    fb.DelFury(10);
+                    break;
+                case 2:
+                    fb2.AddFury(10);
+                    break;
+                case 3:
+                    Alc.DrinkAl(10);
+                break;
+                case 4:
+                    fb3.Loss(50);
+                    break;
+                case 5:
+                    fb4.AddFury(50);
+                    break;
+                    
+            }
+            Debug.Log("bishcjhaisj");
+
+            reset(turns);
+
+            Wherewebou.Play();
+        }
+
+        if (launch == false && forces.x != 0 && forces.y != 0 )
+        {   //where the launching happens
+    
+            Vector3 direction;
+
+            direction.x = forces.x;
+            direction.y = forces.y / yscaler * ps;
+            direction.z = forwardforce * ps;
+
+            Vector3 newpos = transform.position;
+            if (turns == true)
+            {
+                newpos.z = newpos.z - 499;
+                
+            }
+            else {
+                newpos.z = newpos.z + 499;
+                direction.z = -direction.z;
+                direction.x = -direction.x;
+            }
+
+            rb.AddForceAtPosition(direction, newpos);
+            
+            launch = true;
+            //Debug.Log("launching");
+
+        }
+        else {
+            //Debug.Log("launched");
+            //this.rb.velocity.x < 0.05 && this.rb.velocity.y < 0.05 && this.rb.velocity.z < 0.05
+            if (rb.IsSleeping() && launch == true)
+            {
+                //Debug.Log("Red ball is stationary!");
+                //&& rb.transform.position.x < 3.2 && rb.transform.position.x > -2.2
+                if (rb.transform.position.y > newrb.localScale.y*1.13+0.1 )
+                {
+                    //Debug.Log("U did it you crzay son of a bitch");
+                    FindObjectOfType<gamemanager>().Completelevel();
+                }
+                else {
+                    //Debug.Log("Ull get em next time");
+
+                    switch (activeplayer)
+                    {
+                        case 1:
+                            fb.DelFury(50);
+                            break;
+                        case 2:
+                            fb2.AddFury(50);
+                            break;
+                        case 3:
+                            Alc.DrinkAl(50);
+                            break;
+                        case 4:
+                            fb3.Loss(50);
+                            break;
+                        case 5:
+                            fb4.AddFury(50);
+                            break;
+                    }
+                    //Debug.Log("colkk");
+
+                    reset(turns);
+
+                    //Debug.Log(rb.transform.position);
+                    //FindObjectOfType<gamemanager>().EndGame();
+
+                
+                }
+            }
+           
+        
+        }
+
+
+}
+
+
+    public void reset(bool turn)
+    {
+        Debug.Log("reset");
+        firstp = false;
+        lastp = true;
+        launch = false;
+        forces = new Vector3(0, 0, 0);
+        if (turn == false)
+        {
+            rb.transform.SetPositionAndRotation(new Vector3(0f, 0.47f, 49.59f), Quaternion.Euler(new Vector3(0, 0, 0)));
+            FindObjectOfType<Distributer>().switchsides(inactiveplayer);
+
+            
+            p1.enabled = true;
+            p2.enabled = false;
+            turns = true;
+            
+        }
+        else {
+            rb.transform.SetPositionAndRotation(new Vector3(-0.78f, 0.47f, 81f), Quaternion.Euler(new Vector3(0, 0, 0)));
+
+            FindObjectOfType<Distributer>().switchsides(inactiveplayer);
+            
+            p2.enabled = true;
+            p1.enabled = false;
+            turns = false;
+        }
+       
+    }
+}
+
+
